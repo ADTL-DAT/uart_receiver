@@ -3,7 +3,7 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 11/24/2018 04:23:24 PM
+// Create Date: 11/25/2018 12:15:33 AM
 // Design Name: 
 // Module Name: transmitter
 // Project Name: 
@@ -18,8 +18,6 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-
-
 
 
 module transmitter(
@@ -106,5 +104,3 @@ end
 
 
 endmodule
-
-
