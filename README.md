@@ -1,2 +1,5 @@
-# uart_receiver
-verilog code for uart receiver
+receiver transmitter loop :
+  source files :  top.v
+                  receiver.v
+                  transmitter.v
+                  
