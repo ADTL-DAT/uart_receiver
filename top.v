@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module top(input clk,reset,RxD ,output wire TxD);
+module top(input clk,reset,RxD ,output TxD);
    wire [7:0] Data;
 
     receiver inst1 (.clk(clk),.reset(reset),.RxD(RxD),.RxData(Data));
