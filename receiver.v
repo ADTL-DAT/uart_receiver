@@ -25,7 +25,7 @@ module receiver(
 input clk, //input clock
 input reset, //input reset 
 input RxD, //input receving data line
-output reg [7:0]RxData // output for 8 bits data
+output  [7:0]RxData // output for 8 bits data
 // output [7:0]LED // output 8 LEDs
     );
     
@@ -37,7 +37,7 @@ reg [1:0] samplecounter; // 2 bits sample counter to count up to 4 for oversampl
 reg [13:0] counter; // 14 bits counter to count the baud rate
 reg [9:0] rxshiftreg; //bit shifting register
 reg clear_bitcounter,inc_bitcounter,inc_samplecounter,clear_samplecounter;
-wire newclk;
+
  //clear or increment the counter
 
 // constants
@@ -47,34 +47,10 @@ parameter div_sample = 4; //oversampling
 parameter div_counter = clk_freq/(baud_rate*div_sample);  // this is the number we have to divide the system clock frequency to get a frequency (div_sample) time higher than (baud_rate)
 parameter mid_sample = (div_sample/2);  // this is the middle point of a bit where you want to sample it
 parameter div_bit = 10; // 1 start, 8 data, 1 stop
-parameter c_CNT_1MHZ  = 250000000;
-reg [31:0] r_CNT_1MHZ = 0;
-reg        r_TOGGLE_1MHZ  = 1'b0;
-reg        r_CLOCK_SELECT;
-begin
-always @ (posedge clk)
-    begin
-      if (r_CNT_1MHZ == c_CNT_1MHZ-1) // -1, since counter starts at 0
-        begin        
-          r_TOGGLE_1MHZ <= !r_TOGGLE_1MHZ;
-          r_CNT_1MHZ    <= 0;
-        end
-      else
-        r_CNT_1MHZ <= r_CNT_1MHZ + 1;
-    end
- always @ (*)
-     begin
-        r_CLOCK_SELECT <= r_TOGGLE_1MHZ;    
-     end
-     assign newclk = r_CLOCK_SELECT;
-end
 
-begin
-always@(posedge newclk)
-begin   
-RxData = rxshiftreg [8:1];// assign the RxData from the shiftregister
-end 
-end
+
+assign RxData = rxshiftreg [8:1];// assign the RxData from the shiftregister
+
 //UART receiver logic
 always @ (posedge clk)
     begin 
