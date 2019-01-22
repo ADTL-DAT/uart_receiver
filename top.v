@@ -20,9 +20,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module top(input clk,reset,RxD ,output TxD);
-   wire [7:0] Data;
+module top(input clk,reset,RxD ,output TxD,empty,full);
+   wire [7:0] datain,dataout;
 
-    receiver inst1 (.clk(clk),.reset(reset),.RxD(RxD),.RxData(Data));
-    transmitter inst2 (.clk(clk),.reset(reset),.data(Data),.TxD(TxD));
+    receiver inst1 (.clk(clk),.reset(reset),.RxD(RxD),.RxData(datain));
+    fifo1 inst2(.clk(clk),.reset(reset),.dataIn(datain),.dataOut(dataout),.Rd(1'b0),.WR(1'b1),.EMPTY(empty),.FULL(full));
+    fifo1 inst3(.clk(clk),.reset(reset),.dataIn(datain),.dataOut(dataout),.Rd(1'b1),.WR(1'b0),.EMPTY(empty),.FULL(full));
+    transmitter1 inst4 (.clk(clk),.reset(reset),.data(dataout),.TxD(TxD));
+
 endmodule
